@@ -2,7 +2,7 @@
 
 <p align="center"><img src="img/demo.gif?raw=true"/></p>
 
-The goal of this tool is to provide an easy to manipulate todo.txt files in such a way that one can define task dependencies (tasks that must be completed before others can be executed).
+The goal of this tool is to provide an easy way to manipulate todo.txt files in such a way that one can define task dependencies (tasks that must be completed before others can be executed).
 
 It was also a toy project I started in order to learn the Rust programming language (so, don't expect beautiful, idiomatic code).
 
