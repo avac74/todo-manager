@@ -47,7 +47,7 @@ impl Task {
 
     pub fn is_task_due(&self) -> bool {
         match self.due {
-            Some(x) => now_to_naive_date() >= x,
+            Some(x) => now_to_naive_date() >= x && !self.is_complete(),
             None    => false,
         }
     }

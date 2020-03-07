@@ -1,2 +1,5 @@
 This is task 1, with an id @task1 id:task1
 This is task 2, which is blocked by 1, until it is completed +tasksProject @start.task1 after:task1 id:task2
+x (A) 2020-03-01 2020-02-01 This is task 3, which has a creation, completion and due date. due:2020-03-02 id:task3
+(A)  2020-02-01 This is task 4, which has a creation, and due date. This task is due! due:2020-03-02 id:task4
+(B)  2020-02-01 This is task 5, which has a creation, and due date. This task is not due! due:2040-03-01 id:task5
