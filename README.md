@@ -1,6 +1,6 @@
 ##### Intro
 
-<p align="center"><img src="./demo.gif?raw=true"/></p>
+<p align="center"><img src="img/demo.gif?raw=true"/></p>
 
 The goal of this tool is to provide an easy to manipulate todo.txt files in such a way that one can define task dependencies (tasks that must be completed before others can be executed).
 
