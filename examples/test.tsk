@@ -1,0 +1,2 @@
+This is task 1, with an id @task1 id:task1
+This is task 2, which is blocked by 1, until it is completed +tasksProject @start.task1 after:task1 id:task2

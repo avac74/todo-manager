@@ -1,0 +1,13 @@
+[package]
+name = "task_manager"
+version = "0.1.0"
+authors = ["Andre Cruz <avacpim@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+ansi_term = "0.11.0"
+structopt = "0.2.14"
+todo_lib = "0.3.1"
+todo-txt = "1.2.0"
+prettytable-rs = "0.8.0"
+chrono = { version = "0.4.6", features = ["serde"] }
