@@ -17,7 +17,7 @@ use tasklist::*;
 #[derive(Debug, StructOpt)]
 #[structopt(name = "taskman")]
 enum TaskManCommands {
-    #[structopt(name = "ls", about = "Displays all tasks")]
+    #[structopt(name = "ls", about = "Lists tasks")]
     List {
         #[structopt(short = "c", long = "complete", help = "List only completed tasks")]
         complete: bool,
@@ -25,10 +25,21 @@ enum TaskManCommands {
         #[structopt(short = "t", long = "todo", help = "List only non-completed tasks")]
         todo: bool,
 
-        #[structopt(short = "n", long = "next", help = "List tasks that can be done next (non-completed, non-blocked)")]
+        #[structopt(
+            short = "n",
+            long = "next",
+            help = "List tasks that can be done next (non-completed, non-blocked)"
+        )]
         next: bool,
 
-        filename: String 
+        #[structopt(
+            short = "f",
+            long = "filter",
+            help = "List tasks which contain the keyword in their description"
+        )]
+        keyword: Option<String>,
+
+        filename: String,
     },
 
     #[structopt(name = "complete", about = "Mark a task as complete by its ID")]
@@ -43,20 +54,47 @@ fn main() {
     let mut task_vec: TaskList;
 
     match &opt {
-        TaskManCommands::List { complete, todo, next, filename } => {
+        TaskManCommands::List {
+            complete,
+            todo,
+            next,
+            keyword,
+            filename,
+        } => {
             task_vec = mark_blocked_tasks(load_todo_into_tasks(filename));
 
             if *complete {
-                task_vec = mark_blocked_tasks(task_vec.into_iter().filter(|task| task.is_complete()).collect());
+                task_vec = mark_blocked_tasks(
+                    task_vec
+                        .into_iter()
+                        .filter(|task| task.is_complete())
+                        .collect(),
+                );
             }
 
             if *todo {
-                task_vec = mark_blocked_tasks(task_vec.into_iter().filter(|task| !task.is_complete()).collect());
+                task_vec = mark_blocked_tasks(
+                    task_vec
+                        .into_iter()
+                        .filter(|task| !task.is_complete())
+                        .collect(),
+                );
             }
 
             if *next {
-                task_vec = task_vec.into_iter().filter(|x| !x.is_blocked && !x.is_complete()).collect();
+                task_vec = task_vec
+                    .into_iter()
+                    .filter(|x| !x.is_blocked && !x.is_complete())
+                    .collect();
             }
+
+            task_vec = match &*keyword {
+                Some(x) => task_vec
+                    .into_iter()
+                    .filter(|y| y.subject.contains(x))
+                    .collect(),
+                None => task_vec,
+            };
 
             print_task_table(&task_vec);
         }
@@ -76,7 +114,7 @@ fn main() {
                         task
                     }
                 })
-            .collect();
+                .collect();
 
             task_vec = mark_blocked_tasks(res);
 
@@ -95,7 +133,7 @@ fn main() {
                     status: Status::Todo,
                     ..task
                 })
-            .collect();
+                .collect();
 
             task_vec = mark_blocked_tasks(res);
 
