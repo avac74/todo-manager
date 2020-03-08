@@ -15,7 +15,7 @@ use task::*;
 use tasklist::*;
 
 #[derive(Debug, StructOpt)]
-#[structopt(name = "taskman")]
+#[structopt(name = "todo-manager")]
 enum TaskManCommands {
     #[structopt(name = "ls", about = "Lists tasks")]
     List {

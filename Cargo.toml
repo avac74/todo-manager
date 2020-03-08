@@ -1,7 +1,7 @@
 [package]
-name = "task_manager"
+name = "todo_manager"
 version = "0.1.0"
-authors = ["Andre Cruz <avacpim@gmail.com>"]
+authors = ["avac74"]
 edition = "2018"
 
 [dependencies]
