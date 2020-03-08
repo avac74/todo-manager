@@ -1,4 +1,5 @@
 x (A) Add support to filter tasks by project or feature +todo-manager @feature id:1
 Order by projects, contexts, dates, subject, priority, etc +todo-manager @feature id:2
-Ability to add and delete tasks by using their ids +todo-manager @feature id:3
-Show a message saying the list is empty, if there are not tasks to show, instead of an empty table +todo-manager @bugfix id:4
+Ability to add tasks from the command line +todo-manager @feature id:3
+Ability to delete tasks by using their ids +todo-manager @feature id:5
+x Show a message saying the list is empty, if there are not tasks to show, instead of an empty table +todo-manager @bugfix id:4

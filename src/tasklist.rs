@@ -1,8 +1,8 @@
-use crate::task::*;
 use crate::status::*;
-use todo_lib::todo;
+use crate::task::*;
+use prettytable::{format, Table};
 use std::path::Path;
-use prettytable::{Table, format};
+use todo_lib::todo;
 
 pub type TaskList = Vec<Task>;
 
@@ -14,14 +14,24 @@ pub fn print_task_list(tasks: &TaskList) {
 }
 
 pub fn print_task_table(tasks: &TaskList) {
-    let mut table = Table::new();
+    if tasks.len() > 0 {
+        let mut table = Table::new();
 
-    table.set_format(*format::consts::FORMAT_NO_LINESEP_WITH_TITLE);
+        table.set_format(*format::consts::FORMAT_NO_LINESEP_WITH_TITLE);
 
-    table.set_titles(row!["ID", " Status", "Priority", "Description", "Projects", "Blocked By", "Contexts", "Due Date"]);
-    for task in tasks {
-        if task.is_blocked {
-            table.add_row(row![
+        table.set_titles(row![
+            "ID",
+            " Status",
+            "Priority",
+            "Description",
+            "Projects",
+            "Blocked By",
+            "Contexts",
+            "Due Date"
+        ]);
+        for task in tasks {
+            if task.is_blocked {
+                table.add_row(row![
                           task.get_id(),
                           Fyc -> task.status.to_string(),
                           Fbc -> task.priority.to_string(),
@@ -31,8 +41,8 @@ pub fn print_task_table(tasks: &TaskList) {
                           task.contexts.join(","),
                           Fm -> format!("{}{}", task.get_due_date(), if task.is_task_due() { " ⚠" } else { "" }),
             ]);
-        } else {
-            table.add_row(row![
+            } else {
+                table.add_row(row![
                           task.get_id(),
                           Fyc -> task.status.to_string(),
                           Fbc -> task.priority.to_string(),
@@ -42,10 +52,13 @@ pub fn print_task_table(tasks: &TaskList) {
                           task.contexts.join(","),
                           Fm -> format!("{}{}", task.get_due_date(), if task.is_task_due() { " ⚠" } else { "" }),
             ]);
+            }
         }
-    }
 
-    table.printstd();
+        table.printstd();
+    } else {
+        print!("There are no tasks to display");
+    }
 }
 
 pub fn find_task_by_id<'a>(id: &'a str, all_tasks: &'a TaskList) -> Option<&'a Task> {
@@ -80,7 +93,7 @@ pub fn load_todo_into_tasks(filename: &str) -> TaskList {
                     contexts: task.inner.contexts,
                     id: match task.inner.tags.get("id") {
                         Some(x) => Some(x.to_string()),
-                        None => None
+                        None => None,
                     },
                     before: Vec::new(),
                     after: match task.inner.tags.get("after") {
@@ -93,11 +106,13 @@ pub fn load_todo_into_tasks(filename: &str) -> TaskList {
                         Status::Complete
                     } else {
                         Status::Todo
-                    }
+                    },
                 });
             }
-        },
-        Err(_) => { panic!("Oh damn, something went wrong!"); },
+        }
+        Err(_) => {
+            panic!("Oh damn, something went wrong!");
+        }
     }
 
     task_vec
