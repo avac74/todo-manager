@@ -18,27 +18,27 @@ pub fn print_task_table(tasks: &TaskList) {
 
     table.set_format(*format::consts::FORMAT_NO_LINESEP_WITH_TITLE);
 
-    table.set_titles(row!["ID", " Status", "Priority", "Subject", "Projects", "Blocked By", "Contexts", "Due Date"]);
+    table.set_titles(row!["ID", " Status", "Priority", "Description", "Projects", "Blocked By", "Contexts", "Due Date"]);
     for task in tasks {
         if task.is_blocked {
             table.add_row(row![
-                          task.get_id(), 
-                          Fyc -> task.status.to_string(), 
-                          Fbc -> task.priority.to_string(), 
-                          Fr -> task.subject.to_string(), 
-                          Fc -> task.projects.join(","), 
-                          Fr -> task.get_after_as_csv(), 
+                          task.get_id(),
+                          Fyc -> task.status.to_string(),
+                          Fbc -> task.priority.to_string(),
+                          Fr -> task.subject.to_string(),
+                          Fc -> task.projects.join(","),
+                          Fr -> task.get_after_as_csv(),
                           task.contexts.join(","),
                           Fm -> format!("{}{}", task.get_due_date(), if task.is_task_due() { " ⚠" } else { "" }),
             ]);
         } else {
             table.add_row(row![
-                          task.get_id(), 
-                          Fyc -> task.status.to_string(), 
-                          Fbc -> task.priority.to_string(), 
-                          Fg -> task.subject.to_string(), 
-                          Fc -> task.projects.join(","), 
-                          Fr -> task.get_after_as_csv(), 
+                          task.get_id(),
+                          Fyc -> task.status.to_string(),
+                          Fbc -> task.priority.to_string(),
+                          Fg -> task.subject.to_string(),
+                          Fc -> task.projects.join(","),
+                          Fr -> task.get_after_as_csv(),
                           task.contexts.join(","),
                           Fm -> format!("{}{}", task.get_due_date(), if task.is_task_due() { " ⚠" } else { "" }),
             ]);
@@ -73,9 +73,9 @@ pub fn load_todo_into_tasks(filename: &str) -> TaskList {
     match todo_vec {
         Ok(tasks) => {
             for task in tasks {
-                task_vec.push(Task { 
-                    priority: task.inner.priority, 
-                    subject: task.inner.subject, 
+                task_vec.push(Task {
+                    priority: task.inner.priority,
+                    subject: task.inner.subject,
                     projects: task.inner.projects,
                     contexts: task.inner.contexts,
                     id: match task.inner.tags.get("id") {

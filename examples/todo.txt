@@ -1,0 +1,2 @@
+Add support to filter tasks by project +todo-manager @feature id:1
+Order by projects, contexts, dates, subject, priority, etc +todo-manager @feature id:2
