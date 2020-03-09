@@ -44,10 +44,17 @@ enum TaskManCommands {
     },
 
     #[structopt(name = "complete", about = "Mark a task as complete by its ID")]
-    Complete { id: String, filename: String },
+    Complete {
+        id: String,
+        #[structopt(name = "FILE", default_value = "todo.txt")]
+        filename: String,
+    },
 
     #[structopt(name = "clearall", about = "Mark all tasks as not complete")]
-    ClearAll { filename: String },
+    ClearAll {
+        #[structopt(name = "FILE", default_value = "todo.txt")]
+        filename: String,
+    },
 }
 
 fn main() {
