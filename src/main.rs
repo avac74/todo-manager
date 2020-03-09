@@ -39,6 +39,7 @@ enum TaskManCommands {
         )]
         keyword: Option<String>,
 
+        #[structopt(name = "FILE", default_value = "todo.txt")]
         filename: String,
     },
 
@@ -61,6 +62,12 @@ fn main() {
             keyword,
             filename,
         } => {
+            let path = Path::new(filename);
+            if !path.exists() {
+                println!("File {} does not exist", filename);
+                return;
+            }
+
             task_vec = mark_blocked_tasks(load_todo_into_tasks(filename));
 
             if *complete {
